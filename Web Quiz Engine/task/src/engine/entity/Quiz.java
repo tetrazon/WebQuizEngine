@@ -20,7 +20,7 @@ public class Quiz {
     private List<Integer> answer;
     @NotNull
     @NotEmpty
-    private String Title;
+    private String title;
     @NotNull
     @NotEmpty
     private String text;
@@ -28,13 +28,15 @@ public class Quiz {
     @NotNull
     @ElementCollection(targetClass = String.class)
     private List<String> options;
+    @JsonProperty( value = "userName", access = JsonProperty.Access.WRITE_ONLY)
+    private String userName;
 
     public Quiz(){
 
     }
 
     public Quiz(String title, String text, List<String> options, List<Integer> answer) {
-        Title = title;
+        this.title = title;
         this.text = text;
         this.options = options;
         this.answer = answer;
@@ -57,11 +59,11 @@ public class Quiz {
     }
 
     public String getTitle() {
-        return Title;
+        return title;
     }
 
     public void setTitle(String title) {
-        Title = title;
+        this.title = title;
     }
 
     public String getText() {
@@ -78,5 +80,13 @@ public class Quiz {
 
     public void setOptions(List<String> options) {
         this.options = options;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 }

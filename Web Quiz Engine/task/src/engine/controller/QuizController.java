@@ -4,12 +4,15 @@ import engine.repository.QuizRepository;
 import engine.entity.CheckAnswer;
 import engine.entity.Quiz;
 import engine.entity.Solution;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
+
+import static engine.utils.Utils.getNameFromAuthHeader;
 
 @RestController
 @RequestMapping("/api")
@@ -30,9 +33,25 @@ public class QuizController {
 
     }
 
-    @PostMapping("/quizzes")
-    public Quiz createQuiz (@Valid @RequestBody Quiz quizFromRequest) {
+    @DeleteMapping("/quizzes/{id}")
+    public ResponseEntity deleteQuiz(@PathVariable int id, @RequestHeader("Authorization") String authorization) {
+        String userName = getNameFromAuthHeader(authorization);
+        Optional<Quiz> optionalQuiz = quizRepository.findById(id);
+        if (optionalQuiz.isPresent() && !userName.equals(optionalQuiz.get().getUserName())) {
+            return ResponseEntity.status(403).body("this user can't delete the quiz #" + id);
+        }
+        return optionalQuiz
+                .map(quiz -> {
+                    quizRepository.delete(quiz);
+                    return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+                })
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
 
+    @PostMapping("/quizzes")
+    public Quiz createQuiz (@Valid @RequestBody Quiz quizFromRequest,@RequestHeader("Authorization") String authorization) {
+        String userName = getNameFromAuthHeader(authorization);
+        quizFromRequest.setUserName(userName);
         return quizRepository.save(quizFromRequest);
     }
 
