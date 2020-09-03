@@ -1,54 +1,6 @@
 type: edu
 custom_name: stage6
 files:
-- name: build.gradle
-  visible: true
-  text: |
-    plugins {
-        id 'org.springframework.boot' version '2.2.2.RELEASE'
-        id 'java'
-    }
-
-    apply plugin: 'io.spring.dependency-management'
-
-    sourceCompatibility = '11'
-
-    repositories {
-        mavenCentral()
-    }
-
-    sourceSets.main.resources.srcDirs = ["src/resources"]
-
-    dependencies {
-        implementation 'org.springframework.boot:spring-boot-starter'
-        implementation 'org.springframework.boot:spring-boot-starter-actuator'
-        compile("org.springframework.boot:spring-boot-starter-web")
-    }
-  learner_created: false
-- name: src/engine/WebQuizEngine.java
-  visible: true
-  text: |
-    package engine;
-
-    import org.springframework.boot.SpringApplication;
-    import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-    @SpringBootApplication
-    public class WebQuizEngine {
-
-        public static void main(String[] args) {
-            SpringApplication.run(WebQuizEngine.class, args);
-        }
-
-    }
-  learner_created: false
-- name: src/resources/application.properties
-  visible: true
-  text: |
-    server.port=8889
-    management.endpoints.web.exposure.include=*
-    management.endpoint.shutdown.enabled=true
-  learner_created: false
 - name: test/tests/WebQuizEngineTest.java
   visible: false
   text: |
@@ -675,15 +627,22 @@ files:
             );
 
             JsonElement json = resp.getJson();
+
+            CheckResult wrongResponse = CheckResult.wrong(
+                "The quiz sent to the program looked like this:\n" +
+                    getPrettyJson(rightQuiz) + "\n\n" +
+                    "But the received quiz looks like that:\n" +
+                    getPrettyJson(json)
+            );
+
+            if (!json.isJsonObject()) {
+                return wrongResponse;
+            }
+
             JsonObject obj = json.getAsJsonObject();
 
             if (!rightQuiz.equals(obj)) {
-                return CheckResult.wrong(
-                    "The quiz sent to the program looked like this:\n" +
-                        getPrettyJson(rightQuiz) + "\n\n" +
-                        "But the received quiz looks like that:\n" +
-                        getPrettyJson(obj)
-                );
+                return wrongResponse;
             }
 
             return CheckResult.correct();
@@ -786,6 +745,96 @@ files:
         }
     }
   learner_created: false
+- name: src/engine/WebQuizEngine.java
+  visible: true
+  text: |
+    package engine;
+
+    import org.springframework.boot.SpringApplication;
+    import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+    @SpringBootApplication
+    public class WebQuizEngine {
+
+        public static void main(String[] args) {
+            SpringApplication.run(WebQuizEngine.class, args);
+        }
+
+    }
+  learner_created: false
+- name: src/resources/application.properties
+  visible: true
+  text: |
+    server.port=8889
+    management.endpoints.web.exposure.include=*
+    management.endpoint.shutdown.enabled=true
+  learner_created: false
+- name: src/engine/entity/Quiz.java
+  visible: true
+  learner_created: true
+- name: src/engine/controller/QuizController.java
+  visible: true
+  learner_created: true
+- name: src/engine/config/SecurityConfig.java
+  visible: true
+  learner_created: true
+- name: src/engine/security/CustomAuthenticationProvider.java
+  visible: true
+  learner_created: true
+- name: src/engine/security/UserRepositoryUserDetailsService.java
+  visible: true
+  learner_created: true
+- name: src/engine/repository/QuizRepository.java
+  visible: true
+  learner_created: true
+- name: src/engine/repository/UserRepository.java
+  visible: true
+  learner_created: true
+- name: src/engine/utils/Utils.java
+  visible: true
+  learner_created: true
+- name: build.gradle
+  visible: true
+  text: |
+    plugins {
+        id 'org.springframework.boot' version '2.2.2.RELEASE'
+        id 'java'
+    }
+
+    apply plugin: 'io.spring.dependency-management'
+
+    sourceCompatibility = '11'
+
+    repositories {
+        mavenCentral()
+    }
+
+    sourceSets.main.resources.srcDirs = ["src/resources"]
+
+    dependencies {
+        implementation 'org.springframework.boot:spring-boot-starter'
+        implementation 'org.springframework.boot:spring-boot-starter-actuator'
+        compile("org.springframework.boot:spring-boot-starter-web")
+    }
+  learner_created: false
+- name: src/engine/entity/User.java
+  visible: true
+  learner_created: true
+- name: src/engine/entity/CheckAnswer.java
+  visible: true
+  learner_created: true
+- name: src/engine/entity/LoginForm.java
+  visible: true
+  learner_created: true
+- name: src/engine/entity/Solution.java
+  visible: true
+  learner_created: true
+- name: src/engine/controller/UserController.java
+  visible: true
+  learner_created: true
+- name: src/engine/controller/GlobalExceptionHandlerController.java
+  visible: true
+  learner_created: true
 feedback_link: https://hyperskill.org/projects/91/stages/509/implement
 status: Unchecked
-record: -1
+record: 6

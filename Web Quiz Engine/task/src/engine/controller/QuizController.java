@@ -1,20 +1,17 @@
 package engine.controller;
 
-import engine.repository.QuizRepository;
 import engine.entity.CheckAnswer;
 import engine.entity.Quiz;
 import engine.entity.Solution;
+import engine.repository.QuizRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.RequestContextHolder;
 
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
-
-import static engine.utils.Utils.getNameFromAuthHeader;
 
 @RestController
 @RequestMapping("/api")
