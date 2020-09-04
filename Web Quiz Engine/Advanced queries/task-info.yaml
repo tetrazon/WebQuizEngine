@@ -745,23 +745,6 @@ files:
         }
     }
   learner_created: false
-- name: src/engine/WebQuizEngine.java
-  visible: true
-  text: |
-    package engine;
-
-    import org.springframework.boot.SpringApplication;
-    import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-    @SpringBootApplication
-    public class WebQuizEngine {
-
-        public static void main(String[] args) {
-            SpringApplication.run(WebQuizEngine.class, args);
-        }
-
-    }
-  learner_created: false
 - name: src/resources/application.properties
   visible: true
   text: |
@@ -773,15 +756,6 @@ files:
   visible: true
   learner_created: true
 - name: src/engine/controller/QuizController.java
-  visible: true
-  learner_created: true
-- name: src/engine/config/SecurityConfig.java
-  visible: true
-  learner_created: true
-- name: src/engine/security/CustomAuthenticationProvider.java
-  visible: true
-  learner_created: true
-- name: src/engine/security/UserRepositoryUserDetailsService.java
   visible: true
   learner_created: true
 - name: src/engine/repository/QuizRepository.java
@@ -832,7 +806,42 @@ files:
 - name: src/engine/controller/UserController.java
   visible: true
   learner_created: true
+- name: src/engine/entity/Completion.java
+  visible: true
+  learner_created: true
+- name: src/engine/security/CustomAuthenticationProvider.java
+  visible: true
+  learner_created: true
+- name: src/engine/WebQuizEngine.java
+  visible: true
+  text: |
+    package engine;
+
+    import org.springframework.boot.SpringApplication;
+    import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+    @SpringBootApplication
+    public class WebQuizEngine {
+
+        public static void main(String[] args) {
+            SpringApplication.run(WebQuizEngine.class, args);
+        }
+
+    }
+  learner_created: false
+- name: src/engine/config/SecurityConfig.java
+  visible: true
+  learner_created: true
+- name: src/engine/security/UserRepositoryUserDetailsService.java
+  visible: true
+  learner_created: true
 - name: src/engine/controller/GlobalExceptionHandlerController.java
+  visible: true
+  learner_created: true
+- name: src/engine/repository/CompletionRepository.java
+  visible: true
+  learner_created: true
+- name: src/engine/service/CompletionService.java
   visible: true
   learner_created: true
 feedback_link: https://hyperskill.org/projects/91/stages/509/implement
