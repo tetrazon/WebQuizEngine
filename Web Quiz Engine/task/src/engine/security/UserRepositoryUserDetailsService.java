@@ -41,8 +41,8 @@ public class UserRepositoryUserDetailsService implements UserDetailsService {
         //System.out.println(passwordEncoder.encode(loginForm.getPassword()));
         User userToCheck = userRepository.findByUsername(loginForm.getEmail());
         if (userToCheck != null) {
-            System.out.println(userToCheck.getUsername());
-            System.out.println(userToCheck.getPassword());
+            //System.out.println(userToCheck.getUsername());
+            //System.out.println(userToCheck.getPassword());
             return ResponseEntity.badRequest().body("User with email '"
                     + loginForm.getEmail() + "' is already existed!");
         }

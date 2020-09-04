@@ -70,12 +70,13 @@ public class QuizController {
     @GetMapping
     public ResponseEntity getAllQuizzes(@RequestParam Optional<Integer> page,
                                                     @RequestParam Optional<Integer> size) {
-        Page pageResult = quizRepository.findAll(PageRequest.of(page.orElse(0),
-                size.orElse(10)));
-        Optional<List<Quiz>> optionalQuizList = Optional.of(quizRepository.findAll());
-        return optionalQuizList
-                .map(list -> ResponseEntity.ok().body(pageResult))
-                .orElseGet(() -> ResponseEntity.notFound().build());
+        Page pageResult = quizRepository.findAll(PageRequest
+                .of(page.orElse(0), size.orElse(10)));
+        return ResponseEntity.status(HttpStatus.OK).body(pageResult);
+//        Optional<List<Quiz>> optionalQuizList = Optional.of(quizRepository.findAll());
+//        return optionalQuizList
+//                .map(list -> ResponseEntity.ok().body(pageResult))
+//                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @GetMapping("/completed")

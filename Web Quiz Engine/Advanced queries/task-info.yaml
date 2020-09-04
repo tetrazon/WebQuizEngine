@@ -845,5 +845,41 @@ files:
   visible: true
   learner_created: true
 feedback_link: https://hyperskill.org/projects/91/stages/509/implement
-status: Unchecked
+status: Failed
+feedback:
+  message: |-
+    Wrong answer in test #8
+
+    The element at path &quot;/&quot; should be array, found object
+
+    Full JSON:
+    {
+      &quot;content&quot;: [],
+      &quot;pageable&quot;: {
+        &quot;sort&quot;: {
+          &quot;sorted&quot;: false,
+          &quot;unsorted&quot;: true,
+          &quot;empty&quot;: true
+        },
+        &quot;offset&quot;: 0,
+        &quot;pageSize&quot;: 10,
+        &quot;pageNumber&quot;: 0,
+        &quot;unpaged&quot;: false,
+        &quot;paged&quot;: true
+      },
+      &quot;totalElements&quot;: 0,
+      &quot;last&quot;: true,
+      &quot;totalPages&quot;: 0,
+      &quot;number&quot;: 0,
+      &quot;size&quot;: 10,
+      &quot;sort&quot;: {
+        &quot;sorted&quot;: false,
+        &quot;unsorted&quot;: true,
+        &quot;empty&quot;: true
+      },
+      &quot;numberOfElements&quot;: 0,
+      &quot;first&quot;: true,
+      &quot;empty&quot;: true
+    }
+  time: Fri, 04 Sep 2020 21:35:38 UTC
 record: 6
