@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -29,7 +30,7 @@ public class CompletionService {
     public void saveCompletion(int id) {
         Completion completion = new Completion();
         completion.setQuizId(id);
-        completion.setCompletedAt(new Timestamp(System.currentTimeMillis()));
+        completion.setCompletedAt(LocalDateTime.now());
         completion.setUserName(SecurityContextHolder.getContext().getAuthentication().getName());
         System.out.println("new completion: " + completion.getUserName() + " at: " + completion.getCompletedAt());
         completionRepository.save(completion);

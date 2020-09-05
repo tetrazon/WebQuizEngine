@@ -8,10 +8,7 @@ import engine.repository.CompletionRepository;
 import engine.repository.QuizRepository;
 import engine.service.CompletionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -70,21 +67,24 @@ public class QuizController {
     @GetMapping
     public ResponseEntity getAllQuizzes(@RequestParam Optional<Integer> page,
                                                     @RequestParam Optional<Integer> size) {
-        Page pageResult = quizRepository.findAll(PageRequest
+/*        Page<List<Completion>> pageResult = quizRepository.findAll(PageRequest
                 .of(page.orElse(0), size.orElse(10)));
-        return ResponseEntity.status(HttpStatus.OK).body(pageResult);
-//        Optional<List<Quiz>> optionalQuizList = Optional.of(quizRepository.findAll());
-//        return optionalQuizList
-//                .map(list -> ResponseEntity.ok().body(pageResult))
-//                .orElseGet(() -> ResponseEntity.notFound().build());
+        return ResponseEntity.status(HttpStatus.OK).body(pageResult);*/
+        Optional<List<Quiz>> optionalQuizList = Optional.of(quizRepository.findAll());
+        return optionalQuizList
+                .map(list -> ResponseEntity.ok().body(optionalQuizList.get()))
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @GetMapping("/completed")
-    public Page getCompletedQuizzes() {
+    public Page getCompletedQuizzes(@RequestParam Optional<Integer> page,
+                                    @RequestParam Optional<Integer> size) {
         String userName = SecurityContextHolder.getContext().getAuthentication().getName();
         //return completionService.findAllByUserName(userName);
         //List completionsList = completionRepository.findAllByUserName(userName);
-        return completionService.findAllByUserName(userName, PageRequest.of(0, 5));
+        return completionService.findAllByUserName(userName,
+                PageRequest.of(page.orElse(0),
+                        size.orElse(10), Sort.by("completedAt").descending()));
     }
 
     @PostMapping("/{id}/solve")

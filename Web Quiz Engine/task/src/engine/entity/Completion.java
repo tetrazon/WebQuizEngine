@@ -3,7 +3,7 @@ package engine.entity;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "completion")
@@ -13,7 +13,8 @@ public class Completion {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private int id;
     private int quizId;
-    private Timestamp completedAt;
+    @Column(name = "completed_at", columnDefinition = "TIMESTAMP")
+    private LocalDateTime completedAt;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String userName;
 
@@ -33,11 +34,11 @@ public class Completion {
         this.quizId = quizId;
     }
 
-    public Timestamp getCompletedAt() {
+    public LocalDateTime getCompletedAt() {
         return completedAt;
     }
 
-    public void setCompletedAt(Timestamp completedAt) {
+    public void setCompletedAt(LocalDateTime completedAt) {
         this.completedAt = completedAt;
     }
 
